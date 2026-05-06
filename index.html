@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ranked Rollercoasters</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero" aria-labelledby="page-title">
+        <img class="hero__image" src="assets/coaster-hero.png" alt="A sleek rollercoaster sweeping through a modern theme park at golden hour">
+        <div class="hero__shade"></div>
+        <div class="hero__content">
+          <h1 id="page-title">Ranked Rollercoasters</h1>
+          <p class="lede">A score-first board for the rides with the sharpest pacing, biggest presence, and strongest all-round thrill profile.</p>
+          <div class="hero__stats" aria-label="Ranking summary">
+            <span><strong id="ride-count">0</strong> rides</span>
+            <span><strong id="top-score">0.0</strong> top score</span>
+            <span><strong id="total-ridden">0</strong> rides logged</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="board" aria-label="Rollercoaster rankings">
+        <div class="board__header">
+          <div>
+            <p class="eyebrow eyebrow--dark">Sorted by score</p>
+            <h2>The current top tier</h2>
+          </div>
+          <label class="select-wrap">
+            <span>Type</span>
+            <select id="type-filter" aria-label="Filter by coaster type">
+              <option value="all">All types</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="ranking-list" id="ranking-list" aria-live="polite"></div>
+        <p class="status" id="status" role="status"></p>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
