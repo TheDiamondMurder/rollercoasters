@@ -146,6 +146,14 @@ h1 {
   margin-bottom: 22px;
 }
 
+.controls {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: end;
+}
+
 h2 {
   margin-bottom: 0;
   font-size: clamp(1.7rem, 4vw, 2.55rem);
@@ -327,6 +335,11 @@ select {
 
   .board__header {
     display: grid;
+  }
+
+  .controls {
+    display: grid;
+    justify-content: stretch;
   }
 
   select {

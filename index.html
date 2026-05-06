@@ -25,15 +25,27 @@
       <section class="board" aria-label="Rollercoaster rankings">
         <div class="board__header">
           <div>
-            <p class="eyebrow eyebrow--dark">Sorted by score</p>
+            <p class="eyebrow eyebrow--dark" id="sort-label">Sorted by score</p>
             <h2>The current top tier</h2>
           </div>
-          <label class="select-wrap">
-            <span>Type</span>
-            <select id="type-filter" aria-label="Filter by coaster type">
-              <option value="all">All types</option>
-            </select>
-          </label>
+          <div class="controls" aria-label="Ranking controls">
+            <label class="select-wrap">
+              <span>Theme park</span>
+              <select id="park-filter" aria-label="Filter by theme park">
+                <option value="all">All parks</option>
+              </select>
+            </label>
+            <label class="select-wrap">
+              <span>Sort</span>
+              <select id="sort-select" aria-label="Sort rankings">
+                <option value="score">Score</option>
+                <option value="heightFt">Height</option>
+                <option value="speedMph">Speed</option>
+                <option value="inversions">Inversions</option>
+                <option value="opened">Newest</option>
+              </select>
+            </label>
+          </div>
         </div>
 
         <div class="ranking-list" id="ranking-list" aria-live="polite"></div>

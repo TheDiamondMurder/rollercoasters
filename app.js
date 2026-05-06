@@ -1,33 +1,48 @@
 const rankingList = document.querySelector("#ranking-list");
 const statusMessage = document.querySelector("#status");
-const typeFilter = document.querySelector("#type-filter");
+const parkFilter = document.querySelector("#park-filter");
+const sortSelect = document.querySelector("#sort-select");
+const sortLabel = document.querySelector("#sort-label");
 const rideCount = document.querySelector("#ride-count");
 const topScore = document.querySelector("#top-score");
 const totalRidden = document.querySelector("#total-ridden");
 
 let rides = [];
 
-function sortByScore(items) {
-  return [...items].sort((a, b) => b.score - a.score);
-}
+const sortOptions = {
+  score: { label: "score", value: (ride) => ride.score },
+  heightFt: { label: "height", value: (ride) => ride.heightFt },
+  speedMph: { label: "speed", value: (ride) => ride.speedMph },
+  inversions: { label: "inversions", value: (ride) => ride.inversions },
+  opened: { label: "newest", value: (ride) => ride.opened }
+};
 
 function formatNumber(value) {
   return new Intl.NumberFormat("en", { maximumFractionDigits: 0 }).format(value);
 }
 
-function populateTypeFilter(items) {
-  const types = [...new Set(items.map((ride) => ride.type))].sort();
+function sortRankings(items, sortKey = "score") {
+  const activeSort = sortOptions[sortKey] ?? sortOptions.score;
 
-  types.forEach((type) => {
+  return [...items].sort((a, b) => {
+    const primary = activeSort.value(b) - activeSort.value(a);
+    return primary || b.score - a.score || a.name.localeCompare(b.name);
+  });
+}
+
+function populateParkFilter(items) {
+  const parks = [...new Set(items.map((ride) => ride.park))].sort();
+
+  parks.forEach((park) => {
     const option = document.createElement("option");
-    option.value = type;
-    option.textContent = type;
-    typeFilter.append(option);
+    option.value = park;
+    option.textContent = park;
+    parkFilter.append(option);
   });
 }
 
 function updateSummary(items) {
-  const sorted = sortByScore(items);
+  const sorted = sortRankings(items);
   const riddenCount = items.reduce((total, ride) => total + ride.timesRidden, 0);
 
   rideCount.textContent = items.length;
@@ -64,16 +79,20 @@ function createRideCard(ride, index) {
 }
 
 function render() {
-  const selectedType = typeFilter.value;
-  const filtered = selectedType === "all"
+  const selectedPark = parkFilter.value;
+  const selectedSort = sortSelect.value;
+  const filtered = selectedPark === "all"
     ? rides
-    : rides.filter((ride) => ride.type === selectedType);
+    : rides.filter((ride) => ride.park === selectedPark);
 
-  const sorted = sortByScore(filtered);
+  const sorted = sortRankings(filtered, selectedSort);
+  const sortName = sortOptions[selectedSort]?.label ?? "score";
+
   rankingList.replaceChildren(...sorted.map(createRideCard));
+  sortLabel.textContent = `Sorted by ${sortName}`;
   statusMessage.textContent = sorted.length
-    ? `Showing ${sorted.length} ranked ${sorted.length === 1 ? "ride" : "rides"}.`
-    : "No rides match that type.";
+    ? `Showing ${sorted.length} ${sorted.length === 1 ? "ride" : "rides"} sorted by ${sortName}.`
+    : "No rides match that theme park.";
 }
 
 async function loadRankings() {
@@ -85,8 +104,8 @@ async function loadRankings() {
       throw new Error(`Could not load rankings: ${response.status}`);
     }
 
-    rides = sortByScore(await response.json());
-    populateTypeFilter(rides);
+    rides = sortRankings(await response.json());
+    populateParkFilter(rides);
     updateSummary(rides);
     render();
   } catch (error) {
@@ -96,5 +115,6 @@ async function loadRankings() {
   }
 }
 
-typeFilter.addEventListener("change", render);
+parkFilter.addEventListener("change", render);
+sortSelect.addEventListener("change", render);
 loadRankings();
