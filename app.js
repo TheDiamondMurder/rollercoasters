@@ -6,6 +6,8 @@ const sortLabel = document.querySelector("#sort-label");
 const rideCount = document.querySelector("#ride-count");
 const topScore = document.querySelector("#top-score");
 const totalRidden = document.querySelector("#total-ridden");
+const siteWarning = document.querySelector("#site-warning");
+const continueSite = document.querySelector("#continue-site");
 
 let rides = [];
 
@@ -117,4 +119,7 @@ async function loadRankings() {
 
 parkFilter.addEventListener("change", render);
 sortSelect.addEventListener("change", render);
+continueSite.addEventListener("click", () => {
+  siteWarning.classList.add("site-warning--hidden");
+});
 loadRankings();

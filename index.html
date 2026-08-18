@@ -7,13 +7,25 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+    <div class="site-warning" id="site-warning" role="dialog" aria-modal="true" aria-labelledby="warning-title" aria-describedby="warning-copy">
+      <div class="site-warning__panel">
+        <p class="eyebrow eyebrow--dark">Outdated site</p>
+        <h2 id="warning-title">This website is no longer maintained</h2>
+        <p id="warning-copy">The rankings and ride data here may be out of date. You can continue to this archived version, or go to the newer rollercoaster site.</p>
+        <div class="site-warning__actions">
+          <button class="button button--secondary" id="continue-site" type="button">Continue to site</button>
+          <a class="button button--primary" href="https://jakublabs.xyz/rollercoasters/">Go to new site</a>
+        </div>
+      </div>
+    </div>
+
     <main class="shell">
       <section class="hero" aria-labelledby="page-title">
         <img class="hero__image" src="assets/coaster-hero.png" alt="A sleek rollercoaster sweeping through a modern theme park at golden hour">
         <div class="hero__shade"></div>
         <div class="hero__content">
           <h1 id="page-title">Ranked Rollercoasters</h1>
-          <p class="lede">My personal favourite rollercoasters ranked based on my scoring system.</p>
+          <p class="lede">A score-first board for the rides with the sharpest pacing, biggest presence, and strongest all-round thrill profile.</p>
           <div class="hero__stats" aria-label="Ranking summary">
             <span><strong id="ride-count">0</strong> rides</span>
             <span><strong id="top-score">0.0</strong> top score</span>
